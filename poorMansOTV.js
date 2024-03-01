@@ -36,8 +36,9 @@ async function main() {
     const fundTx = await irys.fund(price);
 		console.log(`Successfully funded ${irys.utils.fromAtomic(fundTx.quantity)} ${irys.token}`);
 
-    const { id } = await irys.uploadFile(pathToFile);
-    console.log(`${pathToFile} --> Uploaded to https://arweave.net/${id}`);
+    const receipt = await irys.uploadFile(pathToFile);
+    console.log(`${pathToFile} --> Uploaded to https://arweave.net/${receipt.id}`);
+    console.dir({receipt}, {depth: null});
     console.log('End');
   } catch (error) {
     console.error(error);
@@ -47,15 +48,7 @@ async function main() {
 
  
 
-const fundNode = async (irys,price) => {
- 
-	try {
-		const fundTx = await irys.fund(irys.utils.toAtomic(price));
-		console.log(`Successfully funded ${irys.utils.fromAtomic(fundTx.quantity)} ${irys.token}`);
-	} catch (e) {
-		console.log("Error uploading data ", e);
-	}
-};
+
 
 async function postHedera() {
   const operatorPrivateKey = PrivateKey.fromString("YOUR_PRIVATE_KEY");
